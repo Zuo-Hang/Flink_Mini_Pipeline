@@ -5,7 +5,7 @@
 
 ## ✨ 项目亮点
 - 15 分钟可讲清楚：链路、算子、窗口、写入、回溯。
-- PyFlink 编写算子逻辑，包含 map / flat_map / window aggregate。
+- 基于 Java DataStream API，覆盖 map / flat_map / window 聚合。
 - Kafka 与 ClickHouse 通过 Docker Compose 一键拉起，便于本地演示。
 - 提供模拟数据脚本、ClickHouse 建表脚本与回溯示例。
 
@@ -32,7 +32,7 @@ flink-mini-pipeline/
 
 ## 🔄 数据流概述
 1. `scripts/produce_data.py` 以 JSON 形式持续生成订单事件（含 event_time、amount、user_id 等字段），写入 Kafka `orders_stream`。
-2. `src/main/python/flink_job.py` 从 Kafka 消费事件，执行：
+2. `src/main/java/com/streamforge/pipeline/FlinkMiniPipeline.java` 从 Kafka 消费事件，执行：
    - 数据清洗：JSON 解析、字段补全、重复事件过滤。
    - 滑动窗口：每 1 分钟滑动 30 秒统计订单数、总金额、独立用户数。
    - 异常旁路：写入本地日志文件，支持回溯。
@@ -89,7 +89,6 @@ flink-mini-pipeline/
 ## 🧪 本地演示脚本
 - `scripts/produce_data.py`：支持自定义速率、随机异常。
 - `scripts/create_ck_table.sql`：单节点 ClickHouse 表结构。
-- `flink_job.py`：在 IDE 中断点调试，或提交到本地 Flink 集群。
 
 
 ## 🧯 错误处理 & 回溯
