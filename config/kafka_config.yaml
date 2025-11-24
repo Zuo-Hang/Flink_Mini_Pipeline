@@ -1,0 +1,17 @@
+bootstrap_servers: "localhost:9092"
+topic: "orders_stream"
+group_id: "flink_orders_consumer"
+security:
+  enabled: false
+  sasl_mechanism: ""
+  username: ""
+  password: ""
+producer:
+  linger_ms: 50
+  batch_size: 16384
+  acks: "all"
+  retries: 3
+consumer:
+  start_from: "latest"  # latest | earliest | timestamp
+  timestamp_ms: null
+
